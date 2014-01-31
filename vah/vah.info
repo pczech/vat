@@ -3,4 +3,6 @@ description = Examples made during studying of Advanced Help of Views.
 package = Views API Training
 core = 7.x
 dependencies[] = vat
+
+# Views handlers
 files[] = views/vah_handler_collapsible_area_text.inc

@@ -1,0 +1,4 @@
+name = VAT Tools
+description = Contains common tools for View API Training modules.
+package = Views API Training
+core = 7.x

@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Contains example code demonstrating View API topics covered in Views
+ * Advanced Help.
+ */
+
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+
+/**
+ * Implements hook_menu().
+ */
+function vah_menu() {
+  vat_trace_funct();
+
+  $items = array();
+
+  $items['vah/info'] = array(
+    'title' => 'Views API Info',
+    'page callback' => 'vah_pcb_info',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+
+/**
+ * Page callback: info.
+ */
+function vah_pcb_info() {
+  vat_trace_funct();
+
+  return views_api_version();
+}
+
+/**
+ * Implements hook_views_api().
+ *
+ * Views hooks are kept in a file named MODULENAME.views.inc. This file is
+ * automatically included upon need, so there is no need to try and include
+ * this in hook_init or any other method of including .inc files. This file
+ * should store hook_views_data, hook_views_data_alter(), hook_views_plugins(),
+ * hook_views_handlers(), as well as any other hooks and subsidiary data that
+ * will only be used by your module when Views is active. All handlers and
+ * plugins provided by your module should be in separate .inc files, and must
+ * be referenced in your module's .info file with the files[] directive.
+ *
+ * In order for your files to be included, your module must first implement
+ * hook_views_api() in the main .module file.
+ */
+function vah_views_api() {
+  vat_trace_funct();
+
+  $info = array(
+    'api' => '3.0',
+    'path' => drupal_get_path('module', 'vah') . '/views',
+  );
+
+  return $info;
+}

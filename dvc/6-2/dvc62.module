@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Contains example code demonstrating View API topics covered in Drupal 7
+ * Views Cookbook.
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+/**
+ * Implements hook_views_api().
+ */
+function dvc62_views_api() {
+  vat_trace_funct();
+
+  return array(
+    'api' => '3.0',
+  );
+}

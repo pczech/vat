@@ -9,6 +9,7 @@
 // @ignore sniffer_commenting_inlinecomment_spacingafter:file
 // @ignore sniffer_namingconventions_validclassname_startwithcaptial:file
 // @ignore style_class_names:file
+// @ignore sniffer_namingconventions_validfunctionname_notlowercamel:file
 
 
 /**
@@ -16,4 +17,65 @@
  */
 class dvc62_handler_field_zip_code extends views_handler_field_field {
 
+  /**
+   * Define options of field zip code.
+   */
+  function option_definition() {
+    vat_trace_funct();
+
+    $options = parent::option_definition();
+
+    $options['zip_total'] = array(
+      'default' => FALSE,
+      'bool' => TRUE,
+    );
+
+    // dpm($this, 'this');
+    // dpm($options, 'options');
+
+    return $options;
+  }
+
+  /**
+   * Define form for field zip code options.
+   */
+  function options_form(&$form, &$form_state) {
+    vat_trace_funct();
+
+    parent::options_form($form, $form_state);
+    // dpm($form, 'form');
+    // dpm($form_state, 'form_state');
+    // dpm($this, 'this');
+
+    // Form id defined in options_form (zip_total) must be the same like option
+    // id defined in option_definition - then it is automatically handled.
+    $form['zip_total'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Display Zip total'),
+      '#description' => t('Appends in parentheses the number of nodes
+          containing the same zip code'),
+      '#default_value' => $this->options['zip_total'],
+    );
+
+    // dpm($form, 'form');
+    // dpm($form_state, 'form_state');
+  }
+
+  /**
+   * Run before any fields are rendered.
+   */
+  function pre_render(&$values) {
+    vat_trace_funct();
+
+    dpm($values, 'values');
+  }
+
+  /**
+   * Render the field.
+   */
+  function render($values) {
+    vat_trace_funct();
+
+    dpm($values, 'values');
+  }
 }

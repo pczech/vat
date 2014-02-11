@@ -3,3 +3,6 @@ description = Examples made during studying of Drupal 7 Views Cookbook Chapter 6
 package = Views API Training
 core = 7.x
 dependencies[] = vat
+
+; Views handlers
+files[] = dvc62_handler_field_zip_code.inc

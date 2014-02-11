@@ -4,5 +4,5 @@ package = Views API Training
 core = 7.x
 dependencies[] = vat
 
-# Views handlers
+; Views handlers
 files[] = views/vah_handler_collapsible_area_text.inc

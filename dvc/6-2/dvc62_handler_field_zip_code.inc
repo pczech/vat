@@ -62,20 +62,15 @@ class dvc62_handler_field_zip_code extends views_handler_field_field {
   }
 
   /**
-   * Run before any fields are rendered.
-   */
-  function pre_render(&$values) {
-    vat_trace_funct();
-
-    dpm($values, 'values');
-  }
-
-  /**
    * Render the field.
    */
-  function render($values) {
-    vat_trace_funct();
+  function render_item($count, $item) {
+    if ($this->options['zip_total']) {
+      $count = db_query("SELECT count(*) AS recs FROM {field_data_field_zip_code}
+          WHERE field_zip_code_value = :zip", array(':zip' => $item['raw']['value']))
+          ->fetchField();
+    }
 
-    dpm($values, 'values');
+    return parent::render_item($count, $item) . ' (' . $count . ')';
   }
 }

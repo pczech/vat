@@ -1,3 +1,13 @@
+Modules
+-------
+
+vat - View API Training (empty project)
+vah - View Advanced Help
+dvc - Drupal 7 Views Cookbook
+pgd - Programming Guide to Drupal
+
+
+
 Views API
 ---------
 views_api_version

@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * @file
+ * Contains example code demonstrating View API topics covered in Programming
+ * Guide to Drupal. Integration of pdd/loginhistory to Views.
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+/**
+ * Implements hook_views_api().
+ */
+function pgd1_views_api() {
+  vat_trace_funct();
+
+  return array('api' => '3.0');
+}
+
+
+/**
+ * Implements hook_user_login().
+ */
+function pgd1_user_login(&$edit, $account) {
+  // dpm($edit);
+  // dpm($account);
+
+  $id = db_insert('login_history')->fields(array(
+    'uid' => $account->uid,
+    'login' => $account->login,
+  ))->execute();
+}
+
+
+/**
+ * Implements hook_user_view().
+ */
+function pgd1_user_view($account, $view_mode, $langcode) {
+  // dpm($account);
+
+  $limit = 10;
+
+  $result = db_select('login_history', 'lh')
+    ->fields('lh', array('login'))
+    ->condition('lh.uid', $account->uid)
+    ->range(0, $limit)
+    ->orderBy('login', 'DESC')
+    ->execute();
+
+  $output = '';
+  foreach ($result as $row) {
+    $output .= date("Y-m-d H:i:s", $row->login) . '<br/>';
+  }
+
+  $account->content['login'] = array(
+    '#type' => 'user_profile_category',
+    '#title' => t("Login History"),
+  );
+
+  $account->content['login']['history'] = array(
+    '#type' => 'user_profile_item',
+    '#title' => t("@limit latest logins", array('@limit' => $limit)),
+    '#markup' => $output,
+  );
+}

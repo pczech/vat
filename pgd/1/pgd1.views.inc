@@ -49,6 +49,17 @@ function pgd1_views_data() {
       'handler' => 'views_handler_field_date',
       'click sortable' => TRUE,
     ),
+    'filter' => array(
+      // 'title', 'help' can be overridden.
+      'handler' => 'views_handler_filter_date',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort_date',
+      'title' => 'Login date',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_date',
+    ),
   );
 
   return $data;

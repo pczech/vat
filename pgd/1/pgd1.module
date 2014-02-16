@@ -3,8 +3,15 @@
 /**
  * @file
  * Contains example code demonstrating View API topics covered in Programming
- * Guide to Drupal. Integration of pdd/loginhistory to Views.
+ * Guide to Drupal.
+ *
+ * The modules integrated login_history to Views. It is possible to create a
+ * View presenting login history of users. See 'PGD1 Login history' View.
  */
+
+
+// @ignore sniffer_commenting_inlinecomment_spacingafter:file
+
 
 module_load_include('inc', 'vat', 'includes/tools');
 
@@ -14,7 +21,10 @@ module_load_include('inc', 'vat', 'includes/tools');
 function pgd1_views_api() {
   vat_trace_funct();
 
-  return array('api' => '3.0');
+  return array(
+    'api' => '3.0',
+    // 'path' => drupal_get_path('module', 'pgd1') . '/views',
+  );
 }
 
 

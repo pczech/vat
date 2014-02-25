@@ -1,0 +1,4 @@
+name = Plus One
+description = A +1 voting widget for nodes
+package = Views API Training
+core = 7.x

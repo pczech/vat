@@ -1,0 +1,6 @@
+name = PGD 3
+description = Programming Guide to Drupal: View support to pgd/3/plusone.
+package = Views API Training
+core = 7.x
+dependencies[] = vat
+dependencies[] = plusone

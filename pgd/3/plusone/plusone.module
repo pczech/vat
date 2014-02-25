@@ -1,0 +1,179 @@
+<?php
+
+/**
+ * @file
+ * A simple +1 voting widget.
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+/**
+ * Implements hook_menu().
+ */
+function plusone_menu() {
+  vat_trace_funct();
+
+  $items = array();
+  $items['plusone/vote'] = array(
+    'title' => 'Vote',
+    'page callback' => 'plusone_vote',
+    'access arguments' => array('rate content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function plusone_permission() {
+  vat_trace_funct();
+
+  return array(
+    'rate content' => array(
+      'title' => t('Rate content'),
+    ),
+  );
+}
+
+
+/**
+ * Menu handler.
+ *
+ * Called by jQuery, or by browser if JavaScript is disabled.
+ * Submits the vote request. If called by jQuery, returns JSON.
+ * If called by the browser, returns page with updated vote total.
+ */
+function plusone_vote($nid) {
+  vat_trace_funct();
+
+  global $user;
+
+  $is_author = _plusone_is_author($nid, $user->uid);
+
+  if ($nid > 0 && !$is_author) {
+    // Get current vote count for this user.
+    $v_user = _plusone_get_votes_user($nid, $user->uid);
+    if (!$v_user) {
+      db_insert('plusone_votes')
+        ->fields(array(
+          'uid' => $user->uid,
+          'nid' => $nid,
+          'vote_count' => $v_user + 1,
+        ))
+        ->execute();
+    }
+  }
+
+  // Check to see if jQuery made the call. The AJAX call used
+  // the POST method and passed in the key/value pair js = 1.
+  if (!empty($_POST['js'])) {
+    $total_votes = _plusone_get_votes_total($nid);
+    drupal_json_output(array(
+      'total_votes' => $total_votes,
+      'label' => t('You voted'),
+    ));
+    exit();
+  }
+
+  // It was a non-JavaScript call. Redisplay the entire page
+  // with the updated vote total by redirecting to node/$nid
+  // (or any URL alias that has been set for node/$nid).
+  $path = drupal_get_path_alias('node/' . $nid);
+  drupal_goto($path);
+}
+
+
+/**
+ * Implements hook_node_view().
+ */
+function plusone_node_view($node, $view_mode, $langcode) {
+  vat_trace_funct();
+  // dpm($node);
+  // dpm($view_mode);
+  // dpm($langcode);
+
+  global $user;
+
+  $v_user = _plusone_get_votes_user($node->nid, $user->uid);
+  $v_total = _plusone_get_votes_total($node->nid);
+  $is_author = _plusone_is_author($node->nid, $user->uid);
+  // dpm($v_user);
+  // dpm($v_total);
+  // dpm($is_author);
+
+  // Based on the attributes – set the appropriate label
+  // below the vote count.
+  if ($is_author || !user_access('rate content')) {
+    // User is author; not allowed to vote.
+    $label = t('Votes');
+  }
+  elseif ($v_user > 0) {
+    // User already voted; not allowed to vote again.
+    $label = t('You voted');
+  }
+  else {
+    // User is eligible to vote.
+    $label = l(t('Vote'), "plusone/vote/$node->nid",
+      array('attributes' => array('class' => 'plusone-link')));
+  }
+
+  if ($view_mode == 'full') {
+    $node->content['plusone_vote'] = array(
+      '#markup' => theme('plusone_widget', array(
+        'total' => $v_total,
+        'label' => $label,
+        )),
+    );
+  }
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function plusone_theme($existing, $type, $theme, $path) {
+  vat_trace_funct();
+
+  return array(
+    'plusone_widget' => array(
+      'variables' => array('total' => 'X', 'label' => 'LABEL'),
+      'template' => 'plusone-widget',
+    ),
+  );
+}
+
+
+/**
+ * Check if user is author of the node.
+ */
+function _plusone_is_author($nid, $uid) {
+  $res = db_query('SELECT uid FROM {node} WHERE nid = :nid AND uid = :uid',
+    array(':nid' => $nid, ':uid' => $uid))->FetchField();
+
+  return $res;
+}
+
+
+/**
+ * Get number of votes for user.
+ */
+function _plusone_get_votes_user($nid, $uid) {
+  $res = db_query("SELECT vote_count FROM {plusone_votes} WHERE nid = :nid AND uid = :uid",
+    array(':nid' => $nid, ':uid' => $uid))->fetchField();
+
+  return (int) $res;
+}
+
+
+/**
+ * Get total number of votes for node.
+ */
+function _plusone_get_votes_total($nid) {
+  $res = db_query("SELECT SUM(vote_count) FROM {plusone_votes} WHERE nid = :nid",
+    array(':nid' => $nid))->fetchField();
+
+  return (int) $res;
+}

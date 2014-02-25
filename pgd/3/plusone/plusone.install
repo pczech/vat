@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall hooks for plusone module.
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+
+/**
+ * Implements hook_schema().
+ */
+function plusone_schema() {
+  $schema['plusone_votes'] = array(
+    'description' => 'Stores votes from the plusone module.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The {user}.uid of the user casting the vote.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'nid' => array(
+        'description' => 'The {node}.nid of the node being voted on.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'vote_count' => array(
+        'description' => 'The number of votes cast.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'nid' => array('nid'),
+      'uid' => array('uid'),
+    ),
+    'primary key' => array('uid', 'nid'),
+  );
+
+  return $schema;
+}
+
+
+/**
+ * Implements hook_install().
+ */
+function plusone_install() {
+  vat_trace_funct();
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function plusone_uninstall() {
+  vat_trace_funct();
+}

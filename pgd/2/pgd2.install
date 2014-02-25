@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall hooks for pgd1 module.
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+/**
+ * Implements hook_schema().
+ */
+function pgd2_schema() {
+  vat_trace_funct();
+
+  $schema['giant_rabbits'] = array(
+    'description' => 'Stores information about giant rabbits.',
+    'fields' => array(
+      'bid' => array(
+        'description' => 'Primary key: A unique ID for each bunny.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'Each bunny gets a name.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+      ),
+      'tons' => array(
+        'description' => 'The weight of the bunny to the nearest ton.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('bid'),
+  );
+
+  return $schema;
+}
+
+
+/**
+ * Implements hook_install().
+ */
+function pgd2_install() {
+  // Simple insert: compact form
+  // INSERT INTO {giant_rabbits} (name, ton) VALUES ('Bugs' 12)
+  $bid = db_insert('giant_rabbits')
+  ->fields(array(
+    'name' => 'Bugs',
+    'tons' => 12,
+  ))
+  ->execute();
+
+  // Simple insert: degenerate form
+  // INSERT INTO {giant_rabbits} (name, ton) VALUES ('Alex' 4)
+  $bid = db_insert('giant_rabbits')
+  ->fields(array('name', 'tons'))
+  ->values(array('Alex', '4'))
+  ->execute();
+
+  // Simple insert: compact form
+  // INSERT INTO {giant_rabbits} (name, ton) VALUES ('Roger' 5)
+  $bid = db_insert('giant_rabbits')
+  ->fields(array(
+    'name' => 'Roger',
+    'tons' => 5,
+  ))
+  ->execute();
+}

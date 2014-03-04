@@ -17,9 +17,7 @@ hook_views_data
 hook_views_data_alter
 hook_views_default_views
 hook_views_query_alter
-
-* hook_views_handlers
-* hook_views_plugins
+hook_views_plugins
 
 
 Classes

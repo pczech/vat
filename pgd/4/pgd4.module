@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Contains example code demonstrating View API topics covered in Programming
+ * Guide to Drupal.
+ *
+ * The module presents hook_views_plugins() and hook_views_plugins_alter().
+ */
+
+
+// @ignore sniffer_commenting_inlinecomment_spacingafter:file
+
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+/**
+ * Implements hook_views_api().
+ */
+function pgd4_views_api() {
+  vat_trace_funct();
+
+  return array(
+    'api' => '3.0',
+    // 'path' => drupal_get_path('module', 'pgd1') . '/views',
+  );
+}
+

@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Install, uninstall hooks for pgd1 module.
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');

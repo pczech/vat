@@ -1,0 +1,5 @@
+name = PGD 4
+description = Programming Guide to Drupal: plugins
+package = Views API Training
+core = 7.x
+dependencies[] = vat

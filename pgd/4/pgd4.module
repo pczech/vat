@@ -25,4 +25,3 @@ function pgd4_views_api() {
     // 'path' => drupal_get_path('module', 'pgd1') . '/views',
   );
 }
-

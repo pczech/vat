@@ -1,0 +1,8 @@
+name = VForm
+description = Views Forms example: editable node titles
+package = Views API Training
+core = 7.x
+dependencies[] = vat
+
+; Views handlers
+files[] = views/vform_handler_field_title_edit.inc

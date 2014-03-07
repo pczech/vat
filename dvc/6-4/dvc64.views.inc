@@ -12,7 +12,7 @@ module_load_include('inc', 'vat', 'includes/tools');
 
 
 /**
- * Implements hook_views_data_alter().
+ * Implements hook_field_views_data_alter().
  */
 function dvc64_field_views_data_alter(&$result, $field, $module) {
   vat_trace_funct();

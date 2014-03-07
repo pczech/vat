@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Implements Views form example presented in
+ * https://isovera.com/blog/programmatically-creating-forms-views-drupal-7
+ */
+
+module_load_include('inc', 'vat', 'includes/tools');
+
+/**
+ * Implements hook_views_api().
+ */
+function vform_views_api() {
+  vat_trace_funct();
+
+  $info = array(
+    'api' => '3.0',
+    'path' => drupal_get_path('module', 'vform') . '/views',
+  );
+
+  return $info;
+}

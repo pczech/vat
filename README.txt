@@ -12,6 +12,7 @@ Views API
 ---------
 views_api_version
 
+hook_field_views_data_alter
 hook_views_api
 hook_views_data
 hook_views_data_alter

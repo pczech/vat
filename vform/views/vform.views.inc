@@ -13,7 +13,7 @@ function vform_views_data_alter(&$data) {
   vat_trace_funct();
   // dpm($data);
 
-  $data['node']['title_edit'] =  array(
+  $data['node']['title_edit'] = array(
     'field' => array(
       'title' => t('Title form field'),
       'help' => t('Edit the node title'),

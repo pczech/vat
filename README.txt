@@ -29,7 +29,7 @@ views_handler_area_text
 
 Others
 ------
-
+ctype_upper
 
 
 automatic load: MODULENAME.views.inc

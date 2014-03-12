@@ -1,12 +1,10 @@
 Modules
 -------
-
 vat - View API Training (empty project)
 vah - View Advanced Help
 dvc - Drupal 7 Views Cookbook
 pgd - Programming Guide to Drupal
-
-
+vform - https://isovera.com/blog/programmatically-creating-forms-views-drupal-7
 
 Views API
 ---------
@@ -20,16 +18,10 @@ hook_views_default_views
 hook_views_query_alter
 hook_views_plugins
 
-
-Classes
--------
-views_handler_field_field
-views_handler_area_text
-
-
 Others
 ------
 ctype_upper
-
+node_save
+node_load_multiple
 
 automatic load: MODULENAME.views.inc
